@@ -19,6 +19,7 @@
         <li><a href="/news">News</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>
+      <div id="side_time"><%= Time.now.strftime("%Y-%m-%d %H:%M:%S") %></div>
     </div>
     <div id="main">
       <%= yield %>

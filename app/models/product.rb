@@ -11,5 +11,5 @@ class Product < ActiveRecord::Base
       multiline: true,
       message: 'URL должен указывать на изображение.'
   }
-  validates :title, length: 10
+  validates :title, length: {minimum: 10}
 end

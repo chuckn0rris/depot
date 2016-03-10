@@ -45,7 +45,28 @@ class CartsControllerTest < ActionController::TestCase
       delete :destroy, id: @cart
     end
     assert_redirected_to store_url
+  end
 
-    assert_redirected_to carts_path
+  test "should add different items to different positions" do
+    @cart.add_product products(:ruby).id, products(:ruby).price
+    @cart.add_product products(:one).id, products(:one).price
+
+    assert Cart.find(@cart.id).line_items.count, 2
+  end
+
+  test "should add two items into one position" do
+    @cart.add_product products(:ruby).id, products(:ruby).price
+    @cart.add_product products(:ruby).id, products(:ruby).price
+
+    assert Cart.find(@cart.id).line_items.count, 1
+  end
+
+  test "should be price like at product" do
+    @cart.add_product products(:ruby).id, products(:ruby).price
+
+    assert Cart.find(@cart.id).line_items.count, 1
+    Cart.find(@cart.id).line_items do |item|
+      assert_equal item.price, products(:ruby).price
+    end
   end
 end
